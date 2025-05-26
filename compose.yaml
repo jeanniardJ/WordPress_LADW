@@ -1,0 +1,38 @@
+services:
+    app:
+        container_name: WORDPRESS
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - .:/var/www/html # Mount the current directory to the container
+        depends_on:
+            - mysql
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOST: mysql
+            PMA_USER: root
+            PMA_PASSWORD: root
+        ports:
+            - "8082:80"
+        depends_on:
+            - mysql
+    mysql:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: WORDPRESS
+            MYSQL_USER: WORDPRESS
+            MYSQL_PASSWORD: WORDPRESS
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql-data:/var/lib/mysql
+        restart: always # Restart the container if it stops
+
+volumes:
+    mysql-data:
