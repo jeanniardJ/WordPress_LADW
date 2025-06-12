@@ -2319,7 +2319,7 @@ function wp_new_comment( $commentdata, $wp_error = false ) {
 	}
 
 	if ( empty( $commentdata['comment_date_gmt'] ) ) {
-		$commentdata['comment_date_gmt'] = current_time( 'mysql', true );
+		$commentdata['comment_date_gmt'] = current_time( 'mysql', 1 );
 	}
 
 	if ( empty( $commentdata['comment_type'] ) ) {

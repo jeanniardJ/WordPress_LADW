@@ -1524,12 +1524,15 @@ class WP_List_Table {
 				);
 			}
 
-			$tag        = ( 'cb' === $column_key ) ? 'td' : 'th';
-			$scope      = ( 'th' === $tag ) ? 'scope="col"' : '';
-			$id         = $with_id ? "id='$column_key'" : '';
-			$class_attr = "class='" . implode( ' ', $class ) . "'";
+			$tag   = ( 'cb' === $column_key ) ? 'td' : 'th';
+			$scope = ( 'th' === $tag ) ? 'scope="col"' : '';
+			$id    = $with_id ? "id='$column_key'" : '';
 
-			echo "<$tag $scope $id $class_attr $aria_sort_attr $abbr_attr>$column_display_name</$tag>";
+			if ( ! empty( $class ) ) {
+				$class = "class='" . implode( ' ', $class ) . "'";
+			}
+
+			echo "<$tag $scope $id $class $aria_sort_attr $abbr_attr>$column_display_name</$tag>";
 		}
 	}
 
@@ -1540,6 +1543,7 @@ class WP_List_Table {
 	 * should be provided via get_sortable_columns().
 	 *
 	 * @since 6.3.0
+	 * @access public
 	 */
 	public function print_table_description() {
 		list( $columns, $hidden, $sortable ) = $this->get_column_info();

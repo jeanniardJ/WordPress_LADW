@@ -219,16 +219,15 @@ function _wp_after_delete_font_family( $post_id, $post ) {
 		return;
 	}
 
-	$font_faces_ids = get_children(
+	$font_faces = get_children(
 		array(
 			'post_parent' => $post_id,
 			'post_type'   => 'wp_font_face',
-			'fields'      => 'ids',
 		)
 	);
 
-	foreach ( $font_faces_ids as $font_faces_id ) {
-		wp_delete_post( $font_faces_id, true );
+	foreach ( $font_faces as $font_face ) {
+		wp_delete_post( $font_face->ID, true );
 	}
 }
 
